@@ -1,0 +1,116 @@
+//insertionSort
+#include <bits/stdc++.h>
+using namespace std;
+
+void insertionSort(int arr[], int n)
+{
+	int i, key, j;
+	for (i = 1; i < n; i++)
+	{
+		key = arr[i];
+		j = i - 1;
+
+		while (j >= 0 && arr[j] > key)
+		{
+			arr[j + 1] = arr[j];
+			j = j - 1;
+		}
+		arr[j + 1] = key;
+	}
+}
+void printArray(int arr[], int n)
+{
+	int i;
+	for (i = 0; i < n; i++)
+		cout << arr[i] << " ";
+	cout << endl;
+}
+
+int main()
+{
+	int arr[] = { 12, 11, 13, 5, 6 };
+	int N = sizeof(arr) / sizeof(arr[0]);
+
+	insertionSort(arr, N);
+	printArray(arr, N);
+
+	return 0;
+}
+
+
+// marge sort
+#include <iostream>
+using namespace std;
+
+const int mx = 2e5+123;
+int a[mx];
+
+void merge( int l, int mid, int r )
+{
+    int p = l;
+    int q = mid+1;
+
+    int tmp[r-l+1];
+    int k = 0;
+
+    while ( p <= mid && q <= r ) {
+        if ( a[p] <= a[q] ) {
+            tmp[k] = a[p];
+            k++;
+            p++;
+        }
+        else {
+            tmp[k] = a[q];
+            q++;
+            k++;
+        }
+    }
+
+    while ( p <= mid ) {
+        tmp[k] = a[p];
+        p++;
+        k++;
+    }
+
+    while ( q <= r ) {
+        tmp[k] = a[q];
+        q++;
+        k++;
+    }
+
+    k = 0;
+    for ( int i = l; i <= r; i++ ) {
+        a[i] = tmp[k];
+        k++;
+    }
+}
+
+void mergeSort( int l, int r )
+{
+    if ( l == r ) return;
+
+    int mid = ( l + r ) / 2;
+    mergeSort( l, mid );
+    mergeSort( mid+1, r );
+
+    merge ( l, mid, r );
+}
+
+int main()
+{
+
+    int n;
+    cin >> n;
+    for ( int i = 1; i <= n; i++ ) cin >> a[i];
+
+    mergeSort( 1, n );
+    int c =1;
+
+    for ( int i = 1; i < n; i++ ){
+        if(a[i]!=a[i+1])c++;
+    }
+      cout<<c<<endl;
+
+
+    return 0;
+}
