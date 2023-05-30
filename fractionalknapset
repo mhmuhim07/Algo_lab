@@ -1,0 +1,83 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct frac {
+
+    string name;
+    double w,p,pup;
+
+};
+//stl er sort
+bool cmp(frac a1,frac a2) {
+    return a1.pup>a2.pup;
+}
+
+//profit calculation
+double profit(frac a[],int n,int capacity) {
+    double p=0;
+    for(int i =0; i<n; i++) {
+        if(a[i].w<=capacity)
+        {
+            p+=a[i].p;
+            capacity-=a[i].w;
+            cout<<a[i].name<<" ";
+        }
+        else {
+
+            cout<<a[i].name<<endl;
+            cout<<"Total profit: ";
+            p+=a[i].pup*capacity;
+            break;
+        }
+    }
+    return p;
+
+}
+// selection sort
+int selectionSort(frac a[],int n) {
+    for(int i =0; i<n-1; i++) {
+        int minin = i;
+        for(int j = i+1; j<n; j++) {
+            if(a[j].pup>a[minin].pup) {
+                minin = j;
+            }
+        }
+        swap(a[i],a[minin]);
+    }
+
+
+}
+//bubble sort
+int bubble(frac a[],int n) {
+    for(int i = 0; i<n; i++) {
+        for(int j =0; j<n-i-1; j++) {
+            if(a[j].pup<a[j+1].pup) {
+                swap(a[j],a[j+1]);
+            }
+        }
+    }
+}
+
+
+int main()
+{
+    int n,capacity;
+    cin>>n;
+    frac a[n];
+    for(int i=0; i<n; i++) {
+        cin>>a[i].name>>a[i].w>>a[i].p;
+        a[i].pup= a[i].p/a[i].w;
+    }
+    //sort(a,a+n,cmp);
+    bubble(a,n);
+    //selectionSort(a,n);
+    cout<<"Sorted array: "<<endl;
+    for(int i=0; i<n; i++) {
+        cout<<a[i].name<<" "<<a[i].w<<" "<<a[i].p<<" "<<a[i].pup<<endl;
+    }
+    cout<<"Enter the capacity: "<<endl;
+    cin>>capacity;
+
+    cout<<profit(a,n,capacity)<<endl;
+    return 0;
+}
+
