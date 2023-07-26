@@ -1,0 +1,53 @@
+// Lowest Common Ancestor(LCA) in a Tree 
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+std::vector<int>g[100];
+int pr[100];
+
+void dfs(int v,int p=-1){
+    pr[v]=p;
+    for(auto u : g[v]){
+        if(u==p)continue;
+        dfs(u,v);
+    }
+}
+
+vector<int> path(int v){
+    vector<int>ans;
+    while(v!=-1){
+        ans.push_back(v);
+        v=pr[v];
+    }
+    reverse(ans.begin(),ans.end());
+    return ans;
+}
+
+
+int main()
+{
+    int n;
+    cin>>n;
+    for(int i =0;i<n-1;i++){
+        int x,y;
+        cin>>x>>y;
+        g[x].push_back(y);
+        g[y].push_back(x);
+    }
+    dfs(1);
+    int x,y;
+    cin>>x>>y;
+    vector<int>path_x(path(x));
+    vector<int>path_y(path(y));
+    int lca = -1;
+    int len = min(path_y.size(),path_x.size());
+    for(int i =0;i<len;i++){
+        if(path_x[i]==path_y[i])lca=path_y[i];
+        else break;
+    }
+    
+    cout<<lca<<endl;
+    return 0;
+}
